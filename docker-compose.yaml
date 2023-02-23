@@ -1,0 +1,154 @@
+version: '3'
+services:
+
+  mininet-in-a-container:
+    privileged: true
+    tty: true
+    build:
+      context: .
+    environment:
+      - DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.x11-unix
+      - /lib/modules:/lib/modules
+    container_name: mininet
+    image: pmanzoni/mininet-in-a-container
+    networks:
+      network:
+        ipv4_address: 175.24.1.9
+  atomix1:
+    container_name: atomix1
+    image: atomix/atomix:3.1.5
+    restart: always
+    ports:
+      - 5679
+    networks:
+      network:
+        ipv4_address: 175.24.1.2
+    hostname: atomix1
+    volumes:
+      - ./atomix/atomix1.conf:/opt/atomix/conf/atomix.
+  atomix2:
+    container_name: atomix2
+    image: atomix/atomix:3.1.5
+    restart: always
+    ports:
+      - 5679
+    networks:
+      network:
+        ipv4_address: 175.24.1.3
+    hostname: atomix2
+    volumes:
+      - ./atomix/atomix2.conf:/opt/atomix/conf/atomix.conf
+  atomix3:
+    container_name: atomix3
+    image: atomix/atomix:3.1.5
+    restart: always
+    ports:
+      - 5679
+    networks:
+      network:
+        ipv4_address: 175.24.1.4
+    hostname: atomix3
+    volumes:
+      - ./atomix/atomix3.conf:/opt/atomix/conf/atomix.conf
+  onos1:
+    container_name: onos1
+    image: onosproject/onos:2.5.1
+    restart: always
+    ports:
+      - 8181:8181
+      - 8101:8101
+#      - 6653:6653
+    networks:
+      network:
+        ipv4_address: 175.24.1.5
+    hostname: onos1
+    environment:
+      - ONOS_APPS=fwd,openflow
+    volumes:
+      - ./onos/cluster1.json:/root/onos/config/cluster.json
+  onos2:
+    container_name: onos2
+    image: onosproject/onos:2.5.1
+    restart: always
+    ports:
+      - 8182:8181
+      - 8102:8101
+#      - 6654:6653
+    networks:
+      network:
+        ipv4_address: 175.24.1.6
+    hostname: onos2
+    volumes:
+      - ./onos/cluster2.json:/root/onos/config/cluster.json
+  onos3:
+    container_name: onos3
+    image: onosproject/onos:2.5.1
+    restart: always
+    ports:
+      - 8183:8181
+      - 8103:8101
+#      - 6655:6653
+    networks:
+      network:
+        ipv4_address: 175.24.1.7
+    hostname: onos3
+    volumes:
+      - ./onos/cluster3.json:/root/onos/config/cluster.json
+
+# Proxys
+  envoymininet:
+    container_name: envoymininet
+    image: envoyproxy/envoy:v1.19.0
+    volumes:
+      - ./envoy/envoymininet.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - 6653:6653
+      - 6654:6654
+      - 6655:6655
+    networks:
+      network:
+        ipv4_address: 175.24.1.10
+    hostname: envoymininet
+
+  envoyonos1:
+    container_name: envoyonos1
+    image: envoyproxy/envoy:v1.19.0
+    volumes:
+      - ./envoy/envoyonos1.yaml:/etc/envoy/envoy.yaml
+#    ports:
+#      - 6656:6656
+    networks:
+      network:
+        ipv4_address: 175.24.1.11
+    hostname: envoyonos1
+
+  envoyonos2:
+    container_name: envoyonos2
+    image: envoyproxy/envoy:v1.19.0
+    volumes:
+      - ./envoy/envoyonos2.yaml:/etc/envoy/envoy.yaml
+#    ports:
+#      - 6656:6656
+    networks:
+      network:
+        ipv4_address: 175.24.1.12
+    hostname: envoyonos2
+  envoyonos3:
+    container_name: envoyonos3
+    image: envoyproxy/envoy:v1.19.0
+    volumes:
+      - ./envoy/envoyonos3.yaml:/etc/envoy/envoy.yaml
+#    ports:
+#      - 6656:6656
+    networks:
+      network:
+        ipv4_address: 175.24.1.13
+    hostname: envoyonos3
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 175.24.1.0/24
