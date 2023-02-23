@@ -1,4 +1,4 @@
-# Automatic ONOS cluster using a Docker compose file
+# ONOS cluster creation using a Docker compose file
 This compose file also automaticlly enables OpenFlow in the ONOS cluster to allow connection to Mininet
 <br /><br />
 
