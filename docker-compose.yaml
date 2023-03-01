@@ -1,6 +1,7 @@
 version: '3'
 services:
 
+# Mininet
   mininet-in-a-container:
     privileged: true
     tty: true
@@ -16,6 +17,8 @@ services:
     networks:
       network:
         ipv4_address: 175.24.1.9
+
+# ONOS Cluster
   atomix1:
     container_name: atomix1
     image: atomix/atomix:3.1.5
@@ -97,7 +100,7 @@ services:
     volumes:
       - ./onos/cluster3.json:/root/onos/config/cluster.json
 
-# Proxys
+# Envoy Proxys
   envoymininet:
     container_name: envoymininet
     image: envoyproxy/envoy:v1.19.0
@@ -117,8 +120,6 @@ services:
     image: envoyproxy/envoy:v1.19.0
     volumes:
       - ./envoy/envoyonos1.yaml:/etc/envoy/envoy.yaml
-#    ports:
-#      - 6656:6656
     networks:
       network:
         ipv4_address: 175.24.1.11
@@ -129,8 +130,6 @@ services:
     image: envoyproxy/envoy:v1.19.0
     volumes:
       - ./envoy/envoyonos2.yaml:/etc/envoy/envoy.yaml
-#    ports:
-#      - 6656:6656
     networks:
       network:
         ipv4_address: 175.24.1.12
@@ -140,8 +139,6 @@ services:
     image: envoyproxy/envoy:v1.19.0
     volumes:
       - ./envoy/envoyonos3.yaml:/etc/envoy/envoy.yaml
-#    ports:
-#      - 6656:6656
     networks:
       network:
         ipv4_address: 175.24.1.13
@@ -152,3 +149,55 @@ networks:
     ipam:
       config:
         - subnet: 175.24.1.0/24
+
+# Network Processing
+  goflow2:
+    container_name: goflow2
+    image: netsampler/goflow2:latest
+    depends_on:
+      - kafka
+    ports:
+      - 8080:8080
+      - 6343:6343/udp
+      - 2055:2055/udp
+    restart: always
+    command: 
+    - -transport.kafka.brokers=kafka:9092
+    - -transport=kafka
+    - -transport.kafka.topic=flows
+    - -format=pb
+    - -format.protobuf.fixedlen=true
+    networks:
+      network:
+        ipv4_address: 175.24.1.14
+    hostname: goflow2
+
+  zookeeper:
+    container_name: zookeeper
+    image: bitnami/zookeeper:3.6.3
+    ports:
+      - 2181:2181
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    restart: always
+    networks:
+      network:
+        ipv4_address: 175.24.1.15
+    hostname: zookeeper
+
+  kafka:
+    container_name: kafka
+    image: bitnami/kafka:2.8.0
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_DELETE_TOPIC_ENABLE=true
+    restart: always
+    depends_on:
+      - zookeeper
+    networks:
+      network:
+        ipv4_address: 175.24.1.16
+    hostname: kafka
