@@ -90,10 +90,10 @@ def emptynet():
     s3output=quietRun("ovs−vsctl − − set Bridge s3 ipfix=@i −− −−id=@i create IPFIX targets=\”10.10.10.10:2055\” obs_domain_id=125 obs_point_id=458")
     s4output=quietRun("ovs−vsctl − − set Bridge s4 ipfix=@i −− −−id=@i create IPFIX targets=\”10.10.10.10:2055\” obs_domain_id=126 obs_point_id=459")
     
-    print(f"Switch 1:{s1output)
-    print(f"Switch 2:{s2output)
-    print(f"Switch 3:{s3output)
-    print(f"Switch 4:{s4output)
+    print(f"Switch 1:{s1output}\n")
+    print(f"Switch 2:{s2output}\n")
+    print(f"Switch 3:{s3output}\n")
+    print(f"Switch 4:{s4output}\n")
 
     
     # Ping all
