@@ -8,7 +8,7 @@ from mininet.node import RemoteController
 from mininet.util import quietRun
 import time
 
-def emptynet():
+def emptynet(duration):
 
     # Creating empty network
     net = Mininet(controller=RemoteController, waitConnected=True)
