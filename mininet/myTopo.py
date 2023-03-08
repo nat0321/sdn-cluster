@@ -44,7 +44,6 @@ def emptynet():
     switch2 = net.addSwitch('s2', cls=OVSKernelSwitch, ip='10.0.0.23')
     switch3 = net.addSwitch('s3', cls=OVSKernelSwitch, ip='10.0.0.24')
     switch4 = net.addSwitch('s4', cls=OVSKernelSwitch, ip='10.0.0.25')
-    print ("Added switches")
     
     net.addLink(switch1, c1)
     net.addLink(switch2, c1)
@@ -61,9 +60,7 @@ def emptynet():
 
     
     net.addLink(switch1, host1)
-    
-    print ("Added link 1")
-    
+        
     net.addLink(switch1, host2)
     net.addLink(switch1, host3)
 
@@ -121,6 +118,5 @@ def information():
 # Main Function
 setLogLevel( 'info' )
 emptynet(duration=10)
-print ("finished emptynet function")
 information()
 
