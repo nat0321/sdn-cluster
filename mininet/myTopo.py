@@ -85,15 +85,15 @@ def emptynet():
     net.start()
     
     # Starting Switch output
-    s1output=quietRun("ovs-vsctl - - set Bridge s1 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=123 obs_point_id=456")
-    s2output=quietRun("ovs-vsctl - - set Bridge s2 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=124 obs_point_id=457")
-    s3output=quietRun("ovs-vsctl - - set Bridge s3 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=125 obs_point_id=458")
-    s4output=quietRun("ovs-vsctl - - set Bridge s4 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=126 obs_point_id=459")
+    s1output=quietRun("ovs-vsctl -- set Bridge s1 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=123 obs_point_id=456")
+    s2output=quietRun("ovs-vsctl -- set Bridge s2 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=124 obs_point_id=457")
+    s3output=quietRun("ovs-vsctl -- set Bridge s3 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=125 obs_point_id=458")
+    s4output=quietRun("ovs-vsctl -- set Bridge s4 ipfix=@i -- --id=@i create IPFIX targets=\"192.168.2.249:2055\" obs_domain_id=126 obs_point_id=459")
     
-    print(f"Switch 1:{s1output}\n")
-    print(f"Switch 2:{s2output}\n")
-    print(f"Switch 3:{s3output}\n")
-    print(f"Switch 4:{s4output}\n")
+    print(s1output)
+    print(s2output)
+    print(s3output)
+    print(s4output)
 
     
     # Ping all
