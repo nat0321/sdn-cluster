@@ -5,6 +5,7 @@ from mininet.log import setLogLevel, info
 from mininet.node import OVSKernelSwitch
 from mininet.node import Host
 from mininet.node import RemoteController
+import time
 
 def emptynet():
 
@@ -95,6 +96,7 @@ def emptynet():
     CLI(net)
 
     # Stopping Network
+    time.sleep(duration)
     net.stop()
 
 
@@ -118,7 +120,7 @@ def information():
 
 # Main Function
 setLogLevel( 'info' )
-emptynet()
+emptynet(duration=10)
 print ("finished emptynet function")
 information()
 
