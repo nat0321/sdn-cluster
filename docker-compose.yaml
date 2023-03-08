@@ -12,6 +12,7 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.x11-unix
       - /lib/modules:/lib/modules
+      - ./mininet/myTopo.py:/root/myTopo.py
     container_name: mininet
     image: pmanzoni/mininet-in-a-container
     networks:
@@ -143,12 +144,6 @@ services:
       network:
         ipv4_address: 175.24.1.13
     hostname: envoyonos3
-networks:
-  network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 175.24.1.0/24
 
 # Network Processing
   goflow2:
@@ -201,3 +196,10 @@ networks:
       network:
         ipv4_address: 175.24.1.16
     hostname: kafka
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 175.24.1.0/24
