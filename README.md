@@ -92,7 +92,7 @@ Mininet command cluster example:
 `mn --controller remote,ip=IP,port=6653 --controller remote,ip=IP,port=6654 --controller remote,ip=IP,port=6655 --topo tree,3`
 <br /><br />
 
-ovs−vsctl − − set Bridge s1 ipfix=@i −− −−id=@i create IPFIX targets=\”10.10.10.10:2055\” obs_domain_id=123 obs_point_id=456
+ovs−vsctl − − set Bridge s1 ipfix=@i −− −−id=@i create IPFIX targets=\”192.168.2.249:2055\” obs_domain_id=123 obs_point_id=456
 <br />
 ./goflow2-1.1.1-linux-x86_64 -format.selector SrcAddr,DstAddr,SrcMac,DstMac,InIf,OutIf,SrcPort,DstPort -transport.file meeting.json
 
