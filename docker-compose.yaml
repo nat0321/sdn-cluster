@@ -162,6 +162,7 @@ services:
     - -transport.kafka.topic=flows
     - -format=pb
     - -format.protobuf.fixedlen=true
+    - -format.selector SrcAddr,DstAddr,SrcMac,DstMac,InIf,OutIf,SrcPort,DstPort,ObservationPointID,ObservationDomainID,SequenceNum,TimeFlowStart,TimeFlowEnd
     networks:
       network:
         ipv4_address: 175.24.1.14
