@@ -99,5 +99,6 @@ ovs−vsctl − − set Bridge s1 ipfix=@i −− −−id=@i create IPFIX targe
 
 
 updated goflow2 command (this command will enable kafka and send output in protobuf for topic named flows)
+
 ./goflow2 -transport=kafka -transport.kafka.brokers=localhost:9092 -transport.kafka.topic=flows -format=pb -format.selector SrcAddr,DstAddr,SrcMac,DstMac,InIf,OutIf,SrcPort,DstPort,ObservationPointID,ObservationDomainID,SequenceNum,TimeFlowStart,TimeFlowEnd
 
