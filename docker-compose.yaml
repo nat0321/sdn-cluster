@@ -103,6 +103,7 @@ services:
 
 # Consul Servers and Proxies
   consul:
+    container_name: consul
     image: consul:1.6.0
     command: ["consul","agent","-config-file=/config/consul-single-dc.hcl","-config-dir=/config"]
     volumes:
@@ -115,6 +116,7 @@ services:
 
 
   mininet_consul:
+    container_name: mininet_consul
     image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
 #    image: nicholasjackson/consul-envoy:latest
     environment:
@@ -130,6 +132,7 @@ services:
     network_mode: "service:mininet-in-a-container"
 
   onos1_consul:
+    container_name: onos1_consul
     image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
     environment:
       CONSUL_HTTP_ADDR: 175.24.1.8:8500
@@ -141,6 +144,7 @@ services:
     network_mode: "service:onos1"
 
   onos2_consul:
+    container_name: onos2_consul
     image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
     environment:
       CONSUL_HTTP_ADDR: 175.24.1.8:8500
@@ -152,6 +156,7 @@ services:
     network_mode: "service:onos2"
 
   onos3_consul:
+    container_name: onos3_consul
     image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
     environment:
       CONSUL_HTTP_ADDR: 175.24.1.8:8500
