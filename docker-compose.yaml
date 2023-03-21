@@ -106,11 +106,11 @@ services:
     image: consul:1.6.0
     command: ["consul","agent","-config-file=/config/consul-single-dc.hcl","-config-dir=/config"]
     volumes:
-      - "../consul_config:/config"
+      - "./consul:/config"
     ports:
       - 8500:8500
     networks:
-      vpcbr:
+      network:
         ipv4_address: 175.24.1.8
 
 
