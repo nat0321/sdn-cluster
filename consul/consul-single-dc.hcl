@@ -19,5 +19,5 @@ connect {
   enabled = true
 }
 
-advertise_addr = "10.5.0.2"
+advertise_addr = "175.24.1.8"
 enable_central_service_config = true
