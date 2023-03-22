@@ -101,49 +101,71 @@ services:
     volumes:
       - ./onos/cluster3.json:/root/onos/config/cluster.json
 
-# Envoy Proxys
-  envoymininet:
-    container_name: envoymininet
-    image: envoyproxy/envoy:v1.19.0
+# Consul Servers and Proxies
+  consul:
+    container_name: consul
+    image: consul:1.6.0
+    command: ["consul","agent","-config-file=/config/consul-single-dc.hcl","-config-dir=/config"]
     volumes:
-      - ./envoy/envoymininet.yaml:/etc/envoy/envoy.yaml
+      - "./consul:/config"
     ports:
-      - 6653:6653
-      - 6654:6654
-      - 6655:6655
+      - 8500:8500
     networks:
       network:
-        ipv4_address: 175.24.1.10
-    hostname: envoymininet
+        ipv4_address: 175.24.1.8
 
-  envoyonos1:
-    container_name: envoyonos1
-    image: envoyproxy/envoy:v1.19.0
-    volumes:
-      - ./envoy/envoyonos1.yaml:/etc/envoy/envoy.yaml
-    networks:
-      network:
-        ipv4_address: 175.24.1.11
-    hostname: envoyonos1
 
-  envoyonos2:
-    container_name: envoyonos2
-    image: envoyproxy/envoy:v1.19.0
+  mininet_consul:
+    container_name: mininet_consul
+    image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
+#    image: nicholasjackson/consul-envoy:latest
+    environment:
+      CONSUL_HTTP_ADDR: 175.24.1.8:8500
+      CONSUL_GRPC_ADDR: 175.24.1.8:8502
+      SERVICE_CONFIG: /config/mininet.hcl
+#      CENTRAL_CONFIG: /central_config/web-defaults.hcl
+#      CENTRAL_CONFIG: "/central_config/web-defaults.hcl;/central_config/api-defaults.hcl;/central_config/api-v1-defaults.hcl;/central_config/api-v2-defaults.hcl;/central_config/api-router.hcl"
     volumes:
-      - ./envoy/envoyonos2.yaml:/etc/envoy/envoy.yaml
-    networks:
-      network:
-        ipv4_address: 175.24.1.12
-    hostname: envoyonos2
-  envoyonos3:
-    container_name: envoyonos3
-    image: envoyproxy/envoy:v1.19.0
+      - "./service_config:/config"
+      - "./consul:/central_config"
+    command: ["consul", "connect", "envoy","-sidecar-for", "mininet"]
+    network_mode: "service:mininet-in-a-container"
+
+  onos1_consul:
+    container_name: onos1_consul
+    image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
+    environment:
+      CONSUL_HTTP_ADDR: 175.24.1.8:8500
+      CONSUL_GRPC_ADDR: 175.24.1.8:8502
+      SERVICE_CONFIG: /config/onos1.hcl
     volumes:
-      - ./envoy/envoyonos3.yaml:/etc/envoy/envoy.yaml
-    networks:
-      network:
-        ipv4_address: 175.24.1.13
-    hostname: envoyonos3
+      - "./consul:/config"
+    command: ["consul", "connect", "envoy","-sidecar-for", "onos1"]
+    network_mode: "service:onos1"
+
+  onos2_consul:
+    container_name: onos2_consul
+    image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
+    environment:
+      CONSUL_HTTP_ADDR: 175.24.1.8:8500
+      CONSUL_GRPC_ADDR: 175.24.1.8:8502
+      SERVICE_CONFIG: /config/onos2.hcl
+    volumes:
+      - "./consul:/config"
+    command: ["consul", "connect", "envoy","-sidecar-for", "onos2"]
+    network_mode: "service:onos2"
+
+  onos3_consul:
+    container_name: onos3_consul
+    image: nicholasjackson/consul-envoy:v1.6.0-v0.10.0
+    environment:
+      CONSUL_HTTP_ADDR: 175.24.1.8:8500
+      CONSUL_GRPC_ADDR: 175.24.1.8:8502
+      SERVICE_CONFIG: /config/onos3.hcl
+    volumes:
+      - "./consul:/config"
+    command: ["consul", "connect", "envoy","-sidecar-for", "onos3"]
+    network_mode: "service:onos3"
 
 # Network Processing
   goflow2:
