@@ -89,7 +89,7 @@ Once inside the continer run your Mininet command.
 <br />
 Mininet command cluster example:
 <br />
-`mn --controller remote,port=6001 --controller remoteport=6002 --controller remote,port=6003 --topo tree,3`
+`mn --controller remote,port=6001 --controller remote,port=6002 --controller remote,port=6003 --topo tree,3`
 <br /><br />
 
 ovs−vsctl − − set Bridge s1 ipfix=@i −− −−id=@i create IPFIX targets=\”192.168.2.249:2055\” obs_domain_id=123 obs_point_id=456
