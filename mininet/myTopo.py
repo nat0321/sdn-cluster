@@ -15,9 +15,9 @@ def emptynet(duration):
 
     # Adding remote ONOS controller
     #c1 = net.addController('c1', controller=RemoteController, ip='172.16.235.233', port=6653) #problem here
-    c1 = net.addController('c1', controller=RemoteController, port=6001)
-    c2 = net.addController('c2', controller=RemoteController, port=6002)
-    c3 = net.addController('c3', controller=RemoteController, port=6003)
+    c1 = net.addController('c1', controller=RemoteController, ip='175.24.1.5', port=6653)
+    c2 = net.addController('c2', controller=RemoteController, ip='175.24.1.6', port=6654)
+    c3 = net.addController('c3', controller=RemoteController, ip='175.24.1.7', port=6655)
 
 
 
@@ -46,10 +46,10 @@ def emptynet(duration):
     switch3 = net.addSwitch('s3', cls=OVSKernelSwitch, ip='10.0.0.24')
     switch4 = net.addSwitch('s4', cls=OVSKernelSwitch, ip='10.0.0.25')
     
-    net.addLink(switch1, c1)
-    net.addLink(switch2, c1)
-    net.addLink(switch3, c1)
-    net.addLink(switch4, c1)
+    #net.addLink(switch1, c1)
+    #net.addLink(switch2, c1)
+    #net.addLink(switch3, c1)
+    #net.addLink(switch4, c1)
 
 
     # Adding Links
