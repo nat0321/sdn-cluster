@@ -5,8 +5,8 @@ services:
   mininet-in-a-container:
     privileged: true
     tty: true
-    build:
-      context: .
+#    build:
+#      context: .
     environment:
       - DISPLAY
     volumes:
