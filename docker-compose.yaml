@@ -103,7 +103,7 @@ services:
     container_name: envoyfront
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: ./envoy/dockerfile
     volumes:
       - ./envoy/front.yaml:/etc/envoy/envoy.yaml
     ports:
