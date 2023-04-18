@@ -1,14 +1,15 @@
 resources:
-    - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
-      name: onos2
-      connect_timeout: 30s
-      type: strict_dns
-      load_assignment:
-        cluster_name: onos
-        endpoints:
-          - lb_endpoints:
-              - endpoint:
-                  address:
-                    socket_address:
-                      address: onos2
-                      port_value: 6653
+  - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+    name: onos
+    connect_timeout: 0.25s
+    type: strict_dns
+    lb_policy: round_robin
+    load_assignment:
+      cluster_name: onos
+      endpoints:
+        - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: onos2
+                    port_value: 6653
