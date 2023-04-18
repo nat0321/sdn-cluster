@@ -103,7 +103,7 @@ services:
     container_name: envoyfront
     image: envoyproxy/envoy:v1.19.0
     volumes:
-      - ~/atomix-cluster/front.yaml:/etc/envoy/envoy.yaml
+      - ./atomix-cluster/front.yaml:/etc/envoy/envoy.yaml
     ports:
       - 6969:6969
     networks:
