@@ -101,11 +101,11 @@ services:
 
   envoyfront:
     container_name: envoyfront
-    image: envoyproxy/envoy:v1.19.0
+    build:
+      context: .
+      dockerfile: dockerfile
     volumes:
       - ./envoy/front.yaml:/etc/envoy/envoy.yaml
-      - ./envoy/cds2.yaml:/etc/envoy/cds2.yaml
-      - ./envoy/cds.yaml:/etc/envoy/cds.yaml
     ports:
       - 6969:6969
     networks:
