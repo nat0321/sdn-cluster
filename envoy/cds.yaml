@@ -1,0 +1,14 @@
+resources:
+  - "@type": type.googleapis.com/envoy.config.cluster.v3.Cluster
+    name: onos0
+    connect_timeout: 30s
+    type: strict_dns
+    load_assignment:
+      cluster_name: onos
+      endpoints:
+        - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: onos1
+                    port_value: 6653
